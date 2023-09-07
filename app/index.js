@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { Appbar, FAB } from 'react-native-paper';
-import { Link } from "expo-router";
+import { Link } from 'expo-router';
 
 export default function Page() {
   return (

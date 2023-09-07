@@ -1,27 +1,77 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Appbar, FAB, SegmentedButtons, Text } from 'react-native-paper';
 import { Link } from 'expo-router';
-import { SelectList } from 'react-native-dropdown-select-list';
+import DropDownPicker from 'react-native-dropdown-picker';
+
 
 export default function Page() {
-  const [set, setSet] = React.useState('');
-  const [type, setType] = React.useState('');
+  const [setOpen, setSetOpen] = useState('');
+  const [setValue, setSetValue] = useState('');
+  const [setItems, setSetItems] = useState([
+    {
+      label: 'Adventurer',
+      value: 'adventurer',
+    },
+    {
+      label: 'Archaic Petra',
+      value: 'archaic-petra',
+    },
+    {
+      label: 'Berserker',
+      value: 'berserker',
+    },
+  ]);
 
-  const sets = [
+  const [mainStatOpen, setMainStatOpen] = useState('');
+  const [mainStatValue, setMainStatValue] = useState('');
+  const [mainStatItems, setMainStatItems] = useState([
     {
-      key: '1',
-      value: 'Adventurer',
+      label: 'HP (%)',
+      value: 'hp-percentage',
     },
     {
-      key: '2',
-      value: 'Archaic Petra',
+      label: 'ATK (%)',
+      value: 'atk-percentage',
     },
     {
-      key: '3',
-      value: 'Berserker',
+      label: 'DEF (%)',
+      value: 'def-percentage',
     },
-  ]
+    {
+      label: 'Elemental Mastery',
+      value: 'elemental-mastery',
+    },
+    {
+      label: 'Energy Recharge',
+      value: 'energy-recharge',
+    },
+  ]);
+
+
+  const [type, setType] = useState('');
+  const types = [
+    {
+      value: 'flower',
+      label: 'Flower',
+    },
+    {
+      value: 'plume',
+      label: 'Plume',
+    },
+    {
+      value: 'sands',
+      label: 'Sands'
+    },
+    {
+      value: 'goblet',
+      label: 'Goblet'
+    },
+    {
+      value: 'circlet',
+      label: 'Circlet'
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -33,40 +83,31 @@ export default function Page() {
       </Appbar.Header>
       <View style={styles.form}>
         <Text variant='labelLarge' style={styles.label}>Set</Text>
-        <SelectList
-          setSelected={setSet}
-          data={sets}
-          save='value'
+        <DropDownPicker
+          open={setOpen}
+          value={setValue}
+          items={setItems}
+          setOpen={setSetOpen}
+          setValue={setSetValue}
+          setItems={setSetItems}
         />
         <Text variant='labelLarge' style={styles.label}>Type</Text>
         <SafeAreaView>
           <SegmentedButtons
             value={type}
             onValueChange={setType}
-            buttons={[
-              {
-                value: 'flower',
-                label: 'Flower',
-              },
-              {
-                value: 'plume',
-                label: 'Plume',
-              },
-              {
-                value: 'sands',
-                label: 'Sands'
-              },
-              {
-                value: 'goblet',
-                label: 'Goblet'
-              },
-              {
-                value: 'circlet',
-                label: 'Circlet'
-              },
-            ]}
+            buttons={types}
           />
         </SafeAreaView>
+        <Text variant='labelLarge' style={styles.label}>Main stat</Text>
+        <DropDownPicker
+          open={mainStatOpen}
+          value={mainStatValue}
+          items={mainStatItems}
+          setOpen={setMainStatOpen}
+          setValue={setMainStatValue}
+          setItems={setMainStatItems}
+        />
       </View>
       <Link href='/' asChild>
         <FAB

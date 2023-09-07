@@ -2,9 +2,26 @@ import * as React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Appbar, FAB, SegmentedButtons, Text } from 'react-native-paper';
 import { Link } from 'expo-router';
+import { SelectList } from 'react-native-dropdown-select-list';
 
 export default function Page() {
-  const [artifactType, setArtifactType] = React.useState('');
+  const [set, setSet] = React.useState('');
+  const [type, setType] = React.useState('');
+
+  const sets = [
+    {
+      key: '1',
+      value: 'Adventurer',
+    },
+    {
+      key: '2',
+      value: 'Archaic Petra',
+    },
+    {
+      key: '3',
+      value: 'Berserker',
+    },
+  ]
 
   return (
     <View style={styles.container}>
@@ -15,11 +32,17 @@ export default function Page() {
         />
       </Appbar.Header>
       <View style={styles.form}>
-        <Text variant='labelLarge'>Artifact Type</Text>
-        <SafeAreaView style={styles.artifactTypeButtons}>
+        <Text variant='labelLarge' style={styles.label}>Set</Text>
+        <SelectList
+          setSelected={setSet}
+          data={sets}
+          save='value'
+        />
+        <Text variant='labelLarge' style={styles.label}>Type</Text>
+        <SafeAreaView>
           <SegmentedButtons
-            value={artifactType}
-            onValueChange={setArtifactType}
+            value={type}
+            onValueChange={setType}
             buttons={[
               {
                 value: 'flower',
@@ -63,11 +86,7 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
     margin: 16,
-  },
-  artifactTypeButtons: {
-    flex: 1,
-    marginTop: 8,
-    alignItems: 'center',
+    gap: 16,
   },
   title: {
     fontWeight: 'bold',

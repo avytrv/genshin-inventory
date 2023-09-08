@@ -1,0 +1,190 @@
+[
+    {
+        "label": "Adventurer",
+        "value": "adventurer"
+    },
+    {
+        "label": "Archaic Petra",
+        "value": "archaic-petra"
+    },
+    {
+        "label": "Berserker",
+        "value": "berserker"
+    },
+    {
+        "label": "Blizzard Strayer",
+        "value": "blizzard-strayer"
+    },
+    {
+        "label": "Bloodstained Chivalry",
+        "value": "bloodstained-chivalry"
+    },
+    {
+        "label": "Brave Heart",
+        "value": "brave-heart"
+    },
+    {
+        "label": "Crimson Witch of Flames",
+        "value": "crimson-witch-of-flames"
+    },
+    {
+        "label": "Deepwood Memories",
+        "value": "deepwood-memories"
+    },
+    {
+        "label": "Defender's Will",
+        "value": "defender-s-will"
+    },
+    {
+        "label": "Desert Pavilion Chronicle",
+        "value": "desert-pavilion-chronicle"
+    },
+    {
+        "label": "Echoes of an Offering",
+        "value": "echoes-of-an-offering"
+    },
+    {
+        "label": "Emblem of Severed Fate",
+        "value": "emblem-of-severed-fate"
+    },
+    {
+        "label": "Flower of Paradise Lost",
+        "value": "flower-of-paradise-lost"
+    },
+    {
+        "label": "Gambler",
+        "value": "gambler"
+    },
+    {
+        "label": "Gilded Dreams",
+        "value": "gilded-dreams"
+    },
+    {
+        "label": "Gladiator's Finale",
+        "value": "gladiator-s-finale"
+    },
+    {
+        "label": "Golden Troupe",
+        "value": "golden-troupe"
+    },
+    {
+        "label": "Heart of Depth",
+        "value": "heart-of-depth"
+    },
+    {
+        "label": "Husk of Opulent Dreams",
+        "value": "husk-of-opulent-dreams"
+    },
+    {
+        "label": "Instructor",
+        "value": "instructor"
+    },
+    {
+        "label": "Lavawalker",
+        "value": "lavawalker"
+    },
+    {
+        "label": "Lucky Dog",
+        "value": "lucky-dog"
+    },
+    {
+        "label": "Maiden Beloved",
+        "value": "maiden-beloved"
+    },
+    {
+        "label": "Marechaussee Hunter",
+        "value": "marechaussee-hunter"
+    },
+    {
+        "label": "Martial Artist",
+        "value": "martial-artist"
+    },
+    {
+        "label": "Noblesse Oblige",
+        "value": "noblesse-oblige"
+    },
+    {
+        "label": "Nymph's Dream",
+        "value": "nymph-s-dream"
+    },
+    {
+        "label": "Ocean-Hued Clam",
+        "value": "ocean-hued-clam"
+    },
+    {
+        "label": "Pale Flame",
+        "value": "pale-flame"
+    },
+    {
+        "label": "Prayers for Destiny",
+        "value": "prayers-for-destiny"
+    },
+    {
+        "label": "Prayers for Illumination",
+        "value": "prayers-for-illumination"
+    },
+    {
+        "label": "Prayers for Wisdom",
+        "value": "prayers-for-wisdom"
+    },
+    {
+        "label": "Prayers to Springtime",
+        "value": "prayers-to-springtime"
+    },
+    {
+        "label": "Resolution of Sojourner",
+        "value": "resolution-of-sojourner"
+    },
+    {
+        "label": "Retracing Bolide",
+        "value": "retracing-bolide"
+    },
+    {
+        "label": "Scholar",
+        "value": "scholar"
+    },
+    {
+        "label": "Shimenawa's Reminiscence",
+        "value": "shimenawa-s-reminiscence"
+    },
+    {
+        "label": "Tenacity of the Millelith",
+        "value": "tenacity-of-the-millelith"
+    },
+    {
+        "label": "The Exile",
+        "value": "the-exile"
+    },
+    {
+        "label": "Thundering Fury",
+        "value": "thundering-fury"
+    },
+    {
+        "label": "Thundersoother",
+        "value": "thundersoother"
+    },
+    {
+        "label": "Tiny Miracle",
+        "value": "tiny-miracle"
+    },
+    {
+        "label": "Traveling Doctor",
+        "value": "traveling-doctor"
+    },
+    {
+        "label": "Vermillion Hereafter",
+        "value": "vermillion-hereafter"
+    },
+    {
+        "label": "Viridescent Venerer",
+        "value": "viridescent-venerer"
+    },
+    {
+        "label": "Vourukasha's Glow",
+        "value": "vourukasha-s-glow"
+    },
+    {
+        "label": "Wanderer's Troupe",
+        "value": "wanderer-s-troupe"
+    }
+]

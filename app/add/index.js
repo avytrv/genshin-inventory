@@ -2,30 +2,12 @@ import { useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Appbar, FAB, SegmentedButtons, Text } from 'react-native-paper';
 import { Link } from 'expo-router';
-import DropDownPicker from 'react-native-dropdown-picker';
-
+import RNPickerSelect from 'react-native-picker-select';
+import sets from './sets.json';
+import rarities from './stars.json';
 
 export default function Page() {
-  const [setOpen, setSetOpen] = useState('');
-  const [setValue, setSetValue] = useState('');
-  const [setItems, setSetItems] = useState([
-    {
-      label: 'Adventurer',
-      value: 'adventurer',
-    },
-    {
-      label: 'Archaic Petra',
-      value: 'archaic-petra',
-    },
-    {
-      label: 'Berserker',
-      value: 'berserker',
-    },
-  ]);
-
-  const [mainStatOpen, setMainStatOpen] = useState('');
-  const [mainStatValue, setMainStatValue] = useState('');
-  const [mainStatItems, setMainStatItems] = useState([
+  const mainStats = [
     {
       label: 'HP (%)',
       value: 'hp-percentage',
@@ -46,9 +28,9 @@ export default function Page() {
       label: 'Energy Recharge',
       value: 'energy-recharge',
     },
-  ]);
+  ];
 
-
+  const [rarity, setRarity] = useState('');
   const [type, setType] = useState('');
   const types = [
     {
@@ -81,16 +63,23 @@ export default function Page() {
           titleStyle={styles.title}
         />
       </Appbar.Header>
+
       <View style={styles.form}>
         <Text variant='labelLarge' style={styles.label}>Set</Text>
-        <DropDownPicker
-          open={setOpen}
-          value={setValue}
-          items={setItems}
-          setOpen={setSetOpen}
-          setValue={setSetValue}
-          setItems={setSetItems}
+        <RNPickerSelect
+          onValueChange={(value) => console.log(value)}
+          items={sets}
         />
+
+        <Text variant='labelLarge' style={styles.label}>Rarity</Text>
+        <SafeAreaView>
+          <SegmentedButtons
+            value={rarity}
+            onValueChange={setRarity}
+            buttons={rarities}
+          />
+        </SafeAreaView>
+
         <Text variant='labelLarge' style={styles.label}>Type</Text>
         <SafeAreaView>
           <SegmentedButtons
@@ -99,16 +88,14 @@ export default function Page() {
             buttons={types}
           />
         </SafeAreaView>
+
         <Text variant='labelLarge' style={styles.label}>Main stat</Text>
-        <DropDownPicker
-          open={mainStatOpen}
-          value={mainStatValue}
-          items={mainStatItems}
-          setOpen={setMainStatOpen}
-          setValue={setMainStatValue}
-          setItems={setMainStatItems}
+        <RNPickerSelect
+          onValueChange={(value) => console.log(value)}
+          items={mainStats}
         />
       </View>
+
       <Link href='/' asChild>
         <FAB
           icon='pencil'

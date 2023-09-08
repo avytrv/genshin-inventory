@@ -5,6 +5,7 @@ import { Link } from 'expo-router';
 import RNPickerSelect from 'react-native-picker-select';
 import sets from './sets.json';
 import rarities from './stars.json';
+import types from './types.json';
 
 export default function Page() {
   const mainStats = [
@@ -32,28 +33,6 @@ export default function Page() {
 
   const [rarity, setRarity] = useState('');
   const [type, setType] = useState('');
-  const types = [
-    {
-      value: 'flower',
-      label: 'Flower',
-    },
-    {
-      value: 'plume',
-      label: 'Plume',
-    },
-    {
-      value: 'sands',
-      label: 'Sands'
-    },
-    {
-      value: 'goblet',
-      label: 'Goblet'
-    },
-    {
-      value: 'circlet',
-      label: 'Circlet'
-    },
-  ];
 
   return (
     <View style={styles.container}>

@@ -9,12 +9,12 @@ import circletMainStats from './circlet-main-stats.json';
 import subStats from './substats.json';
 
 import { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { Appbar, Button, SegmentedButtons, Text, TextInput } from 'react-native-paper';
+import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
+import { Appbar, Button, SegmentedButtons, Text } from 'react-native-paper';
 import RNPickerSelect from 'react-native-picker-select';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import NumericInput from 'react-native-numeric-input';
+import Checkbox from 'expo-checkbox';
 
 export default function Page() {
   const [ mainStats, setMainStats ] = useState([]);
@@ -30,7 +30,8 @@ export default function Page() {
       rarity: 5,
       type: 'flower',
       mainStatName: 'hp',
-      mainStatValue: 0.0,
+      mainStatValue: '0',
+      hp: '0',
     },
   });
   // TODO: Change onSubmit function to add artifact to database
@@ -167,22 +168,35 @@ export default function Page() {
               required: true,
             }}
             render={({ field: { onChange, value } }) => (
-              <NumericInput
+              <TextInput
                 value={value}
-                onChange={onChange} 
-                valueType='real'
-                step={0.1}
+                onChangeText={onChange} 
+                keyboardType='numeric'
               />
             )}
             name='mainStatValue'
           />
           {errors.mainStatValue && <Text>This is required.</Text>}
+
+          <Text variant='labelLarge' style={styles.label}>HP</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                value={value}
+                onChangeText={onChange} 
+                keyboardType='numeric'
+              />
+            )}
+            name='hp'
+          />
+
           {
             // TODO: Redirect to artifact list screen after submission
           }
           <Button icon="pencil" mode="contained" onPress={handleSubmit(onSubmit)}>
             Add
-        </Button>
+          </Button>
         </View>
       </View>
     </KeyboardAwareScrollView>

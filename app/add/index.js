@@ -11,10 +11,10 @@ import subStats from './substats.json';
 import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
 import { Appbar, Button, SegmentedButtons, Text } from 'react-native-paper';
-import RNPickerSelect from 'react-native-picker-select';
+import { Picker } from '@react-native-picker/picker';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Checkbox from 'expo-checkbox';
+import Slider from '@react-native-community/slider';
 
 export default function Page() {
   const [ mainStats, setMainStats ] = useState([]);
@@ -29,14 +29,25 @@ export default function Page() {
       set: '',
       rarity: 5,
       type: 'flower',
+      level: 20,
       mainStatName: 'hp',
       mainStatValue: '0',
       hp: '0',
+      hpPercentage: '0',
+      atk: '0',
+      atkPercentage: '0',
+      def: '0',
+      defPercentage: '0',
+      elementalMastery: '0',
+      energyRecharge: '0',
+      critRate: '0',
+      critDmg: '0',
     },
   });
   // TODO: Change onSubmit function to add artifact to database
   const onSubmit = (data) => console.log(data);
   const watchType = watch('type');
+  const watchLevel = watch('level');
 
   useEffect(() => {
     const options = {
@@ -86,24 +97,32 @@ export default function Page() {
         </Appbar.Header>
 
         <View style={styles.form}>
-          <Text variant='labelLarge' style={styles.label}>Set</Text>
+          <Text variant='titleMedium'>Set</Text>
           <Controller
             control={control}
             rules={{
               required: true,
             }}
             render={({ field: { onChange, value } }) => (
-              <RNPickerSelect
+              <Picker
                 onValueChange={onChange}
-                value={value}
-                items={sets}
-              />
+                selectedValue={value}
+                style={styles.picker}
+              >
+                {sets.map((set) => (
+                  <Picker.Item
+                    label={set.label}
+                    value={set.value} 
+                    key={set.value}
+                  />
+                ))}
+              </Picker>
             )}
             name='set'
           />
           {errors.set && <Text>This is required.</Text>}
 
-          <Text variant='labelLarge' style={styles.label}>Rarity</Text>
+          <Text variant='titleMedium'>Rarity</Text>
           <SafeAreaView>
             <Controller
               control={control}
@@ -122,7 +141,7 @@ export default function Page() {
             {errors.rarity && <Text>This is required.</Text>}
           </SafeAreaView>
 
-          <Text variant='labelLarge' style={styles.label}>Type</Text>
+          <Text variant='titleMedium'>Type</Text>
           <SafeAreaView>
           <Controller
               control={control}
@@ -144,24 +163,55 @@ export default function Page() {
             {errors.type && <Text>This is required.</Text>}
           </SafeAreaView>
 
-          <Text variant='labelLarge' style={styles.label}>Main stat</Text>
+          <Text variant='titleMedium'>Level</Text>
           <Controller
             control={control}
             rules={{
               required: true,
             }}
             render={({ field: { onChange, value } }) => (
-              <RNPickerSelect
-                onValueChange={onChange}
+              <Slider
+                minimumValue={1}
+                maximumValue={20}
                 value={value}
-                items={mainStats}
+                onValueChange={onChange}
+                minimumTrackTintColor='#edddf6'
+                maximumTrackTintColor='#edddf6'
+                thumbTintColor='#21182a'
+                step={1}
               />
+            )}
+            name='level'
+          />
+          <Text variant='labelLarge'>{ watchLevel }</Text>
+          {errors.set && <Text>This is required.</Text>}
+
+          <Text variant='titleMedium'>Main stat</Text>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Picker
+                onValueChange={onChange}
+                selectedValue={value}
+                style={styles.picker}
+              >
+                {mainStats.map((mainStat) => (
+                  <Picker.Item
+                    label={mainStat.label}
+                    value={mainStat.value} 
+                    key={mainStat.value}
+                  />
+                ))}
+              </Picker>
             )}
             name='mainStatName'
           />
           {errors.mainStatName && <Text>This is required.</Text>}
 
-          <Text variant='labelLarge' style={styles.label}>Main stat value</Text>
+          <Text variant='labelLarge'>Main stat value</Text>
           <Controller
             control={control}
             rules={{
@@ -172,29 +222,39 @@ export default function Page() {
                 value={value}
                 onChangeText={onChange} 
                 keyboardType='numeric'
+                style={styles.input}
+                selectionColor='#edddf6'
               />
             )}
             name='mainStatValue'
           />
           {errors.mainStatValue && <Text>This is required.</Text>}
 
-          <Text variant='labelLarge' style={styles.label}>HP</Text>
-          <Controller
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                value={value}
-                onChangeText={onChange} 
-                keyboardType='numeric'
-              />
-            )}
-            name='hp'
-          />
+          <Text variant='titleMedium'>Sub stats</Text>
 
+          {(subStats).map((subStat) => (
+            <View>
+              <Text variant='labelLarge' style={styles.label}>{subStat.label}</Text>
+              <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TextInput
+                    value={value}
+                    onChangeText={onChange} 
+                    keyboardType='numeric'
+                    style={styles.input}
+                    selectionColor='#edddf6'
+                  />
+                )}
+                name={subStat.value}
+              />
+            </View>
+          ))}
+          
           {
             // TODO: Redirect to artifact list screen after submission
           }
-          <Button icon="pencil" mode="contained" onPress={handleSubmit(onSubmit)}>
+          <Button icon='pencil' mode='contained' onPress={handleSubmit(onSubmit)}>
             Add
           </Button>
         </View>
@@ -213,8 +273,17 @@ const styles = StyleSheet.create({
     margin: 16,
     gap: 16,
   },
-  title: {
-    fontWeight: 'bold',
+  picker: {
+    backgroundColor: 'rgb(237, 221, 246)',
+  },
+  label: {
+    marginBottom: 8,
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
   },
   fab: {
     position: 'absolute',

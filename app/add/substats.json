@@ -4,39 +4,39 @@
         "value": "hp"
     },
     {
+        "label": "HP%",
+        "value": "hpPercentage"
+    },
+    {
         "label": "ATK",
         "value": "atk"
+    },
+    {
+        "label": "ATK%",
+        "value": "atkPercentage"
     },
     {
         "label": "DEF",
         "value": "def"
     },
     {
-        "label": "HP%",
-        "value": "hp-percentage"
-    },
-    {
-        "label": "ATK%",
-        "value": "atk-percentage"
-    },
-    {
         "label": "DEF%",
-        "value": "def-percentage"
+        "value": "defPercentage"
     },
     {
         "label": "Elemental Mastery",
-        "value": "elemental-mastery"
+        "value": "elementalMastery"
     },
     {
         "label": "Energy Recharge",
-        "value": "energy-recharge"
+        "value": "energyRecharge"
     },
     {
         "label": "CRIT Rate",
-        "value": "crit-rate"
+        "value": "critRate"
     },
     {
         "label": "CRIT DMG",
-        "value": "crit-dmg"
+        "value": "critDmg"
     }
 ]

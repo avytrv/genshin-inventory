@@ -1,9 +1,3 @@
-import { useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { Appbar, FAB, SegmentedButtons, Text } from 'react-native-paper';
-import { Link } from 'expo-router';
-import RNPickerSelect from 'react-native-picker-select';
-
 import sets from './sets.json';
 import rarities from './stars.json';
 import types from './types.json';
@@ -14,9 +8,64 @@ import gobletMainStats from './goblet-main-stats.json';
 import circletMainStats from './circlet-main-stats.json';
 import subStats from './substats.json';
 
+import { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { Appbar, FAB, SegmentedButtons, Text } from 'react-native-paper';
+import RNPickerSelect from 'react-native-picker-select';
+import { Controller, useForm } from 'react-hook-form';
+
 export default function Page() {
-  const [rarity, setRarity] = useState('');
-  const [type, setType] = useState('');
+  const [ mainStats, setMainStats ] = useState([]);
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      set: '',
+      rarity: 5,
+      type: 'flower',
+      mainStatName: 'hp',
+      mainStatValue: 0,
+    },
+  });
+  // TODO: Change onSubmit function to add artifact to database
+  const onSubmit = (data) => console.log(data);
+  const watchType = watch('type');
+
+  useEffect(() => {
+    const options = {
+      shouldValidate: true,
+      shouldDirty: true
+    };
+    switch(watchType) {
+      case 'flower':
+        setMainStats(flowerMainStats);
+        setValue('mainStatName', 'hp', options);
+        break;
+      case 'plume':
+        setMainStats(plumeMainStats);
+        setValue('mainStatName', 'atk', options);
+        break;
+      case 'sands':
+        setMainStats(sandsMainStats);
+        setValue('mainStatName', 'hp-percentage', options);
+        break;
+      case 'goblet':
+        setMainStats(gobletMainStats);
+        setValue('mainStatName', 'hp-percentage', options);
+        break;
+      case 'circlet':
+        setMainStats(circletMainStats);
+        setValue('mainStatName', 'hp-percentage', options);
+        break;
+      default:
+        setMainStats([]);
+        setValue('mainStatName', '', options);
+    }
+  }, [watchType]);
 
   return (
     <View style={styles.container}>
@@ -29,42 +78,89 @@ export default function Page() {
 
       <View style={styles.form}>
         <Text variant='labelLarge' style={styles.label}>Set</Text>
-        <RNPickerSelect
-          onValueChange={(value) => console.log(value)}
-          items={sets}
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <RNPickerSelect
+              onValueChange={onChange}
+              value={value}
+              items={sets}
+            />
+          )}
+          name='set'
         />
+        {errors.set && <Text>This is required.</Text>}
 
         <Text variant='labelLarge' style={styles.label}>Rarity</Text>
         <SafeAreaView>
-          <SegmentedButtons
-            value={rarity}
-            onValueChange={setRarity}
-            buttons={rarities}
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, value } }) => (
+              <SegmentedButtons
+                value={value}
+                onValueChange={onChange}
+                buttons={rarities}
+              />
+            )}
+            name='rarity'
           />
+          {errors.rarity && <Text>This is required.</Text>}
         </SafeAreaView>
 
         <Text variant='labelLarge' style={styles.label}>Type</Text>
         <SafeAreaView>
-          <SegmentedButtons
-            value={type}
-            onValueChange={setType}
-            buttons={types}
+        <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, value } }) => (
+              <SegmentedButtons
+                value={value}
+                onValueChange={(e) => {
+                  onChange(e);
+
+                }}
+                buttons={types}
+              />
+            )}
+            name='type'
           />
+          {errors.type && <Text>This is required.</Text>}
         </SafeAreaView>
 
-        <Text variant='labelLarge' style={styles.label}>Main stat</Text>
-        <RNPickerSelect
-          onValueChange={(value) => console.log(value)}
-          items={sandsMainStats}
+        <Text variant='labelLarge' style={styles.label}>Main Stat</Text>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <RNPickerSelect
+              onValueChange={onChange}
+              value={value}
+              items={mainStats}
+            />
+          )}
+          name='mainStatName'
         />
+        {errors.mainStatName && <Text>This is required.</Text>}
       </View>
 
-      <Link href='/' asChild>
-        <FAB
-          icon='pencil'
-          style={styles.fab}
-        />
-      </Link>
+      {
+        // TODO: Redirect to artifact list screen after submission
+      }
+      <FAB
+        icon='pencil'
+        style={styles.fab}
+        onPress={handleSubmit(onSubmit)}
+      />
     </View>
   );
 }

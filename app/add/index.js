@@ -3,34 +3,18 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Appbar, FAB, SegmentedButtons, Text } from 'react-native-paper';
 import { Link } from 'expo-router';
 import RNPickerSelect from 'react-native-picker-select';
+
 import sets from './sets.json';
 import rarities from './stars.json';
 import types from './types.json';
+import flowerMainStats from './flower-main-stats.json';
+import plumeMainStats from './plume-main-stats.json';
+import sandsMainStats from './sands-main-stats.json';
+import gobletMainStats from './goblet-main-stats.json';
+import circletMainStats from './circlet-main-stats.json';
+import subStats from './substats.json';
 
 export default function Page() {
-  const mainStats = [
-    {
-      label: 'HP (%)',
-      value: 'hp-percentage',
-    },
-    {
-      label: 'ATK (%)',
-      value: 'atk-percentage',
-    },
-    {
-      label: 'DEF (%)',
-      value: 'def-percentage',
-    },
-    {
-      label: 'Elemental Mastery',
-      value: 'elemental-mastery',
-    },
-    {
-      label: 'Energy Recharge',
-      value: 'energy-recharge',
-    },
-  ];
-
   const [rarity, setRarity] = useState('');
   const [type, setType] = useState('');
 
@@ -71,7 +55,7 @@ export default function Page() {
         <Text variant='labelLarge' style={styles.label}>Main stat</Text>
         <RNPickerSelect
           onValueChange={(value) => console.log(value)}
-          items={mainStats}
+          items={sandsMainStats}
         />
       </View>
 

@@ -16,6 +16,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Slider from '@react-native-community/slider';
 
+// import firebase from 'firebase/app';
+// import 'firebase/firebase-database'
+import { update, database, set, push, dataRef, ref, auth } from '../../firebase.js';
+
 export default function Page() {
   const [ mainStats, setMainStats ] = useState([]);
   const {
@@ -44,8 +48,40 @@ export default function Page() {
       critDmg: '0',
     },
   });
+
   // TODO: Change onSubmit function to add artifact to database
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = (data) => {
+    console.log(data); 
+
+    const newItemRef = push(dataRef);
+    set(newItemRef, {
+      "atk": data.atk,
+      "atkPercentage": data.atkPercentage,
+      "critDmg": data.critDmg,
+      "type": data.type,
+      "critRate": data.critRate,
+      "def": data.def,
+      "defPercentage": data.defPercentage,
+      "elementalMastery": data.elementalMastery,
+      "energyRecharge": data.energyRecharge,
+      "hp": data.hp,
+      "hpPercentage": data.hpPercentage,
+      "level": data.level,
+      "mainStatName": data.mainStatName,
+      "mainStatValue": data.mainStatValue,
+      "rarity": data.rarity,
+      "set": data.set,
+      "type": data.type,
+    });
+
+    const userId = auth.currentUser.uid;
+    const userRef = ref(database, `users/${userId}/ownedItems`);
+
+    update(userRef, {
+      [newItemRef.key]: true
+    })
+  }
   const watchType = watch('type');
   const watchLevel = watch('level');
 
@@ -233,7 +269,7 @@ export default function Page() {
           <Text variant='titleMedium'>Sub stats</Text>
 
           {(subStats).map((subStat) => (
-            <View>
+            <View key={subStat.value}>
               <Text variant='labelLarge' style={styles.label}>{subStat.label}</Text>
               <Controller
                 control={control}

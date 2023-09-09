@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
-    "@react-native-community/slider": "^4.4.3",
     "@firebase/database": "^1.0.1",
     "@react-native-async-storage/async-storage": "1.18.2",
+    "@react-native-community/slider": "^4.4.3",
     "@react-native-picker/picker": "2.4.10",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",

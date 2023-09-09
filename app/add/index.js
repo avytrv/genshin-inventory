@@ -14,6 +14,7 @@ import { Appbar, Button, SegmentedButtons, Text, TextInput } from 'react-native-
 import RNPickerSelect from 'react-native-picker-select';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import NumericInput from 'react-native-numeric-input';
 
 export default function Page() {
   const [ mainStats, setMainStats ] = useState([]);
@@ -29,7 +30,7 @@ export default function Page() {
       rarity: 5,
       type: 'flower',
       mainStatName: 'hp',
-      mainStatValue: '0',
+      mainStatValue: 0.0,
     },
   });
   // TODO: Change onSubmit function to add artifact to database
@@ -159,16 +160,18 @@ export default function Page() {
           />
           {errors.mainStatName && <Text>This is required.</Text>}
 
+          <Text variant='labelLarge' style={styles.label}>Main stat value</Text>
           <Controller
             control={control}
             rules={{
               required: true,
             }}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                label="Main stat value"
+              <NumericInput
                 value={value}
-                onChangeText={onChange}
+                onChange={onChange} 
+                valueType='real'
+                step={0.1}
               />
             )}
             name='mainStatValue'

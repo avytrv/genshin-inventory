@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "genshin-inventory-v2",
+    "displayName": "Genshin Inventory",
     "slug": "genshin-inventory-v2",
     "version": "1.0.0",
     "orientation": "portrait",

@@ -1,0 +1,18 @@
+{
+    "atk": "0",
+    "atkPercentage": "5.8",
+    "critDmg": "7.8",
+    "critRate": "23.3",
+    "def": "0",
+    "defPercentage": "0",
+    "elementalMastery": "0",
+    "energyRecharge": "0",
+    "hp": "0",
+    "hpPercentage": "4.1",
+    "level": 20,
+    "mainStatName": "hp",
+    "mainStatValue": "4780",
+    "rarity": 5,
+    "set": "blizzard-strayer",
+    "type": "flower"
+  }

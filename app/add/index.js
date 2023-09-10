@@ -1,12 +1,12 @@
-import sets from './sets.json';
-import rarities from './stars.json';
-import types from './types.json';
-import flowerMainStats from './flower-main-stats.json';
-import plumeMainStats from './plume-main-stats.json';
-import sandsMainStats from './sands-main-stats.json';
-import gobletMainStats from './goblet-main-stats.json';
-import circletMainStats from './circlet-main-stats.json';
-import subStats from './substats.json';
+import sets from '../../data/sets.json';
+import rarities from '../../data/stars.json';
+import types from '../../data/types.json';
+import flowerMainStats from '../../data/flower-main-stats.json';
+import plumeMainStats from '../../data/plume-main-stats.json';
+import sandsMainStats from '../../data/sands-main-stats.json';
+import gobletMainStats from '../../data/goblet-main-stats.json';
+import circletMainStats from '../../data/circlet-main-stats.json';
+import subStats from '../../data/substats.json';
 
 import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';

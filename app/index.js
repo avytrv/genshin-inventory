@@ -3,11 +3,14 @@ import { StyleSheet, View, TextInput, Button, Alert, Text } from 'react-native';
 import { auth, signInWithEmailAndPassword } from '../firebase.js';
 import { Appbar, FAB } from 'react-native-paper';
 import { Link } from 'expo-router';
+import testArtifact from '../data/test-artifact.json';
+import ArtifactItem from './components/artifact-item.js';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);  // New state for login status
+  const [artifacts, setArtifacts] = useState([testArtifact]); 
 
   const loginUser = async () => {
     try {
@@ -23,8 +26,9 @@ const Login = ({ navigation }) => {
 
   // If logged in, redirect to the desired screen
   if (loggedIn) {
-    return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    if (artifacts.length == 0) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{fontWeight: 'bold'}}></Text>
         <Text>Click the '+' sign to add your artifact info!</Text>
         <Link href='/add' asChild>
@@ -34,7 +38,21 @@ const Login = ({ navigation }) => {
           />
         </Link>
     </View>
-    );
+      )
+    } else {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text style={{fontWeight: 'bold'}}></Text>
+          <ArtifactItem data={testArtifact} />
+          <Link href='/add' asChild>
+            <FAB
+              icon='plus'
+              style={styles.fab}
+            />
+          </Link>
+        </View>
+      );
+    }
   }
 
   return (

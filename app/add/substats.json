@@ -1,0 +1,42 @@
+[
+    {
+        "label": "HP",
+        "value": "hp"
+    },
+    {
+        "label": "HP%",
+        "value": "hpPercentage"
+    },
+    {
+        "label": "ATK",
+        "value": "atk"
+    },
+    {
+        "label": "ATK%",
+        "value": "atkPercentage"
+    },
+    {
+        "label": "DEF",
+        "value": "def"
+    },
+    {
+        "label": "DEF%",
+        "value": "defPercentage"
+    },
+    {
+        "label": "Elemental Mastery",
+        "value": "elementalMastery"
+    },
+    {
+        "label": "Energy Recharge",
+        "value": "energyRecharge"
+    },
+    {
+        "label": "CRIT Rate",
+        "value": "critRate"
+    },
+    {
+        "label": "CRIT DMG",
+        "value": "critDmg"
+    }
+]

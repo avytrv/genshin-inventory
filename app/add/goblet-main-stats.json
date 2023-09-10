@@ -1,0 +1,50 @@
+[
+    {
+        "label": "HP%",
+        "value": "hp-percentage"
+    },
+    {
+        "label": "ATK%",
+        "value": "atk-percentage"
+    },
+    {
+        "label": "DEF%",
+        "value": "def-percentage"
+    },
+    {
+        "label": "Elemental Mastery",
+        "value": "elemental-mastery"
+    },
+    {
+        "label": "Physical DMG Bonus",
+        "value": "physical-dmg-bonus"
+    },
+    {
+        "label": "Pyro DMG Bonus",
+        "value": "pyro-dmg-bonus"
+    },
+    {
+        "label": "Hydro DMG Bonus",
+        "value": "hydro-dmg-bonus"
+    },
+    {
+        "label": "Dendro DMG Bonus",
+        "value": "dendro-dmg-bonus"
+    },
+    {
+        "label": "Electro DMG Bonus",
+        "value": "electro-dmg-bonus"
+    },
+    {
+        "label": "Anemo DMG Bonus",
+        "value": "anemo-dmg-bonus"
+    },
+    {
+        "label": "Cryo DMG Bonus",
+        "value": "cryo-dmg-bonus"
+    },
+    {
+        "label": "Geo DMG Bonus",
+        "value": "geo-dmg-bonus"
+    }
+]

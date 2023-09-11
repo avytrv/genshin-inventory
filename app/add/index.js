@@ -7,6 +7,7 @@ import sandsMainStats from '../../data/sands-main-stats.json';
 import gobletMainStats from '../../data/goblet-main-stats.json';
 import circletMainStats from '../../data/circlet-main-stats.json';
 import subStats from '../../data/substats.json';
+import images from '../images';
 
 import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
@@ -273,10 +274,17 @@ export default function Page() {
 
           {(subStats).map((subStat) => (
             <View key={uuidv4()}>
-              <Image
-                source='../../assets/substats/atk.png'
-              />
-              <Text variant='labelLarge' style={styles.label}>{subStat.label}</Text>
+              <View style={styles.label}>
+                <Image
+                    source={images[subStat.value]}
+                    style={{ width: 20, height: 20 }}
+                    contentFit='cover'
+                />
+                <Text variant='labelLarge'>
+                  {subStat.label}
+                </Text>
+              </View>
+              
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -320,6 +328,10 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 8,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 4,
   },
   input: {
     borderWidth: 1,

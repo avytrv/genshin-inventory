@@ -11,24 +11,31 @@ function ArtifactItem({ data }) {
   return (
     <Card style={styles.card}>
       <Card.Content>
-        <Text variant='titleLarge'>{ labels[data.set] } | { labels[data.type] }</Text>
-        <Text variant='titleMedium'>{ labels[data.mainStatName] } : { data.mainStatValue }</Text>
-        <View>
-          {subStats.map((subStat) => {
-            if (parseFloat(data[subStat.value]) !== 0) {
-              return (
-                <View key={uuidv4()} style={styles.label}>
-                  <Image
-                    source={images[subStat.value]}
-                    style={{ width: 20, height: 20 }}
-                    contentFit='cover'
-                  />
-                  <Text>{ subStat.label } : {data[subStat.value]}</Text>
-                </View>
-                )
-              }
-          })}
+        <View style={styles.label}>
+          <Text variant='titleLarge'>{ labels[data.set] }</Text>
+          <Image
+                  source={images[data.type]}
+                  style={{ width: 20, height: 20 }}
+                  contentFit='cover'
+                />
+          <Text variant='titleLarge'>{ labels[data.type] }</Text>
         </View>
+        
+        <Text variant='titleMedium'>{ labels[data.mainStatName] } : { data.mainStatValue }</Text>
+        {subStats.map((subStat) => {
+          if (parseFloat(data[subStat.value]) !== 0) {
+            return (
+              <View key={uuidv4()} style={styles.label}>
+                <Image
+                  source={images[subStat.value]}
+                  style={{ width: 20, height: 20 }}
+                  contentFit='cover'
+                />
+                <Text>{ subStat.label } : {data[subStat.value]}</Text>
+              </View>
+              )
+            }
+        })}
       </Card.Content>
     </Card>
   );
@@ -42,6 +49,7 @@ const styles = StyleSheet.create({
   label: {
     flex: 0,
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 4,
   },
 });

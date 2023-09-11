@@ -331,6 +331,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     gap: 4,
   },
   input: {

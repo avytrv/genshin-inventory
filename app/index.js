@@ -1,21 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Button, Alert, Text } from 'react-native';
 import { auth, signInWithEmailAndPassword, ref, database, get } from '../firebase.js';
-import { FAB } from 'react-native-paper';
+import { FAB, Appbar } from 'react-native-paper';
 import { Link } from 'expo-router';
 import ArtifactItem from './components/artifact-item.js';
-import { auth, signInWithEmailAndPassword } from '../firebase.js';
-import { FAB } from 'react-native-paper';
-import { Link } from 'expo-router';
 import 'react-native-get-random-values';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { v4 as uuidv4 } from 'uuid';
-import ArtifactItem from '../components/artifact-item.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  // const [artifacts, setArtifacts] = useState([testArtifact]); 
 
   const currentUserUIDRef = useRef(null);
   const currentSnapshot = useRef(null);
@@ -49,6 +47,7 @@ const Login = ({ navigation }) => {
       });
     }
   }, [loggedIn]);
+
   const loginUser = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -60,7 +59,30 @@ const Login = ({ navigation }) => {
         console.log("Error logging in. Please try again.")
         Alert.alert("Error logging in:", error.message);
     }
-  }; 
+  };
+
+  if (loggedIn) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 16 }}>
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          style={{ borderWidth: 1, padding: 8, marginBottom: 8 }}
+        />
+        <TextInput
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          style={{ borderWidth: 1, padding: 8, marginBottom: 16 }}
+        />
+        <Button title="Login" onPress={loginUser} />
+        <Link href=''> Continue to Homepage! </Link>
+      </View>
+    );
+  }
 
   if (loggedIn) {
     if (loadingArtifacts) {
@@ -84,24 +106,33 @@ const Login = ({ navigation }) => {
       )
   } else {
     return (
-      <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text style={styles.title}>My Artifacts</Text>
-        {currentUserArtifactData.current ? 
-            currentUserArtifactData.current.map((artifact, index) => (
-                <ArtifactItem key={index} data={artifact} />
-            )): 
-            <Text>Loading...</Text> // will be displayed in case data hasn't been fetched yet
-        }
-        <Link href='/add' asChild>
-            <FAB
-                icon='plus'
-                style={styles.fab}
+      <KeyboardAwareScrollView>
+        <View style={styles.container}>
+        <Appbar.Header>
+            <Appbar.Content
+              title='My Artifacts'
+              titleStyle={styles.title}
             />
-        </Link>
-    </View>
+          </Appbar.Header>
+          <View style={styles.form}>
+            {currentUserArtifactData.current ? 
+                currentUserArtifactData.current.map((artifact, index) => (
+                    <ArtifactItem key={index} data={artifact} />
+                )): 
+                <Text>Loading...</Text> // will be displayed in case data hasn't been fetched yet
+            }
+          </View>
+          <Link href='/add' asChild>
+              <FAB
+                  icon='plus'
+                  style={styles.fab}
+              />
+          </Link>
+      </View>
+    </KeyboardAwareScrollView>
     );
   }
-}
+  }
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 16 }}>

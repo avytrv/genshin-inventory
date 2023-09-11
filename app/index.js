@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Button, Alert, Text } from 'react-native';
 import { auth, signInWithEmailAndPassword } from '../firebase.js';
-import { Appbar, FAB } from 'react-native-paper';
+import { FAB } from 'react-native-paper';
 import { Link } from 'expo-router';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 import testArtifact from '../data/test-artifact.json';
-import ArtifactItem from './components/artifact-item.js';
+import ArtifactItem from '../components/artifact-item.js';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -43,7 +45,9 @@ const Login = ({ navigation }) => {
       return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text style={{fontWeight: 'bold'}}></Text>
-          <ArtifactItem data={testArtifact} />
+          {artifacts.map((artifact) => (
+            <ArtifactItem key={uuidv4()} data={artifact} />
+          ))}
           <Link href='/add' asChild>
             <FAB
               icon='plus'

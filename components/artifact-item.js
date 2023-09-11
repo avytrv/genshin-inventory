@@ -1,7 +1,9 @@
 import { Card, Text } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
-import labels from '../../data/labels.json';
-import subStats from '../../data/substats.json';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+import labels from '../data/labels.json';
+import subStats from '../data/substats.json';
 
 function ArtifactItem({ data }) {
   return (
@@ -11,7 +13,7 @@ function ArtifactItem({ data }) {
       {subStats.map((subStat) => {
         if (parseFloat(data[subStat.value]) !== 0) {
           return (
-            <Text>{ subStat.label } : {data[subStat.value]}</Text>
+            <Text key={uuidv4()}>{ subStat.label } : {data[subStat.value]}</Text>
             )
           }
         })}

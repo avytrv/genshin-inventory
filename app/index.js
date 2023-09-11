@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Button, Alert, Text } from 'react-native';
-import { auth, signInWithEmailAndPassword } from '../firebase.js';
+import { auth, signInWithEmailAndPassword, ref, database, get } from '../firebase.js';
 import { Appbar, FAB } from 'react-native-paper';
 import { Link } from 'expo-router';
 import testArtifact from '../data/test-artifact.json';
@@ -12,21 +12,44 @@ const Login = ({ navigation }) => {
   const [loggedIn, setLoggedIn] = useState(false);  // New state for login status
   const [artifacts, setArtifacts] = useState([testArtifact]); 
 
+  const currentUserUIDRef = useRef(null);
+  const currentSnapshot = useRef(null);
+  const artifactsIds = useRef(null);
+  const currentUserArtifactData = useRef(null);
+
   const loginUser = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log("Successfully logged in!", user.uid);
+      currentUserUIDRef.current = user.uid;
+      console.log("Successfully logged in!", currentUserUIDRef.current);
       setLoggedIn(true);  // Set the loggedIn state to true on successful login
     } catch (error) {
-        console.log("Wrong email/password. Please try again.")
+        console.log("Error logging in. Please try again.")
         Alert.alert("Error logging in:", error.message);
     }
-  };
+  }; 
 
   // If logged in, redirect to the desired screen
   if (loggedIn) {
-    if (artifacts.length == 0) {
+    const dbRef = ref(database);
+    get(dbRef, `users/${currentUserUIDRef.current}/users`).then((snapshot) => {
+      if (snapshot.exists()) {
+        currentSnapshot.current = snapshot;
+        
+        const deepCopy = JSON.parse(JSON.stringify(currentSnapshot.current));
+        artifactsIds.current = Object.keys(deepCopy?.users?.[currentUserUIDRef.current]?.["ownedItems"]);
+        
+        currentUserArtifactData.current = [];
+        for (var i = 0; i < artifactsIds.current.length; i++) {
+          currentUserArtifactData.current.push(deepCopy?.items?.[artifactsIds.current[i]]);
+        }
+      } else {
+        console.log("No data found for current user.");
+      }
+    });
+
+    if (currentUserArtifactData.current == null || currentUserArtifactData.current.length == 0) {
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{fontWeight: 'bold'}}></Text>
@@ -43,14 +66,20 @@ const Login = ({ navigation }) => {
       return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text style={{fontWeight: 'bold'}}></Text>
-          <ArtifactItem data={testArtifact} />
+          {currentUserArtifactData.current ? 
+              currentUserArtifactData.current.map((artifact, index) => (
+                  <ArtifactItem key={index} data={artifact} />
+              ))
+          : 
+              <Text>Loading...</Text>  // This is a placeholder; you can replace it with a loading spinner or other content
+          }
           <Link href='/add' asChild>
-            <FAB
-              icon='plus'
-              style={styles.fab}
-            />
+              <FAB
+                  icon='plus'
+                  style={styles.fab}
+              />
           </Link>
-        </View>
+      </View>
       );
     }
   }

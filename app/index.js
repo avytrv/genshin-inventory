@@ -1,59 +1,102 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Button, Alert, Text } from 'react-native';
-import { auth, signInWithEmailAndPassword } from '../firebase.js';
-import { Appbar, FAB } from 'react-native-paper';
+import { auth, signInWithEmailAndPassword, ref, database, get } from '../firebase.js';
+import { FAB } from 'react-native-paper';
 import { Link } from 'expo-router';
-import testArtifact from '../data/test-artifact.json';
+// import testArtifact from '../data/test-artifact.json';
 import ArtifactItem from './components/artifact-item.js';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);  // New state for login status
-  const [artifacts, setArtifacts] = useState([testArtifact]); 
+  const [loggedIn, setLoggedIn] = useState(false);
+  // const [artifacts, setArtifacts] = useState([testArtifact]); 
 
+  const currentUserUIDRef = useRef(null);
+  const currentSnapshot = useRef(null);
+  const artifactsIds = useRef(null);
+  const currentUserArtifactData = useRef(null);
+
+  const [loadingArtifacts, setLoadingArtifacts] = useState(false);
+
+
+  useEffect(() => {
+    if (loggedIn) {
+      setLoadingArtifacts(true);
+      
+      const dbRef = ref(database);
+      get(dbRef, `users/${currentUserUIDRef.current}/users`).then((snapshot) => {
+        if (snapshot.exists()) {
+          currentSnapshot.current = snapshot;
+  
+          const deepCopy = JSON.parse(JSON.stringify(currentSnapshot.current));
+          artifactsIds.current = Object.keys(deepCopy?.users?.[currentUserUIDRef.current]?.["ownedItems"]);
+  
+          currentUserArtifactData.current = [];
+          for (var i = 0; i < artifactsIds.current.length; i++) {
+            currentUserArtifactData.current.push(deepCopy?.items?.[artifactsIds.current[i]]);
+          }
+        } else {
+          console.log("No data found for current user.");
+        }
+        
+        setLoadingArtifacts(false);
+      });
+    }
+  }, [loggedIn]);
   const loginUser = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log("Successfully logged in!", user.uid);
-      setLoggedIn(true);  // Set the loggedIn state to true on successful login
+      currentUserUIDRef.current = user.uid;
+      console.log("Successfully logged in!", currentUserUIDRef.current);
+      setLoggedIn(true);
     } catch (error) {
-        console.log("Wrong email/password. Please try again.")
+        console.log("Error logging in. Please try again.")
         Alert.alert("Error logging in:", error.message);
     }
-  };
+  }; 
 
-  // If logged in, redirect to the desired screen
   if (loggedIn) {
-    if (artifacts.length == 0) {
+    if (loadingArtifacts) {
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{fontWeight: 'bold'}}></Text>
-        <Text>Click the '+' sign to add your artifact info!</Text>
-        <Link href='/add' asChild>
-          <FAB
-            icon='plus'
-            style={styles.fab}
-          />
-        </Link>
-    </View>
-      )
-    } else {
-      return (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text style={{fontWeight: 'bold'}}></Text>
-          <ArtifactItem data={testArtifact} />
-          <Link href='/add' asChild>
-            <FAB
-              icon='plus'
-              style={styles.fab}
-            />
-          </Link>
+          <Text>Loading...</Text>
         </View>
       );
-    }
+    } else if (currentUserArtifactData.current == null || currentUserArtifactData.current.length == 0) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{fontWeight: 'bold'}}></Text>
+            <Text>Click the '+' sign to add your artifact info!</Text>
+            <Link href='/add' asChild>
+              <FAB
+                icon='plus'
+                style={styles.fab}
+              />
+            </Link>
+        </View>
+      )
+  } else {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <Text style={styles.title}>My Artifacts</Text>
+        {currentUserArtifactData.current ? 
+            currentUserArtifactData.current.map((artifact, index) => (
+                <ArtifactItem key={index} data={artifact} />
+            )): 
+            <Text>Loading...</Text> // will be displayed in case data hasn't been fetched yet
+        }
+        <Link href='/add' asChild>
+            <FAB
+                icon='plus'
+                style={styles.fab}
+            />
+        </Link>
+    </View>
+    );
   }
+}
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 16 }}>
@@ -83,6 +126,8 @@ const styles = StyleSheet.create({
     },
     title: {
       fontWeight: 'bold',
+      fontSize: 50,
+      alignSelf: 'center',
     },
     fab: {
       position: 'absolute',

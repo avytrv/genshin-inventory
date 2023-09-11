@@ -3261,10 +3261,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/slider@npm:^4.4.3":
-  version: 4.4.3
-  resolution: "@react-native-community/slider@npm:4.4.3"
-  checksum: e02416e763a05bee54967aae1e14ff9c7d76395416dc4ff7c0595a71c9866db35ac0bca8305fa1c7feca3568a327d563f6f14e14d342536257e91d3d4b6d5f3e
+"@react-native-community/slider@npm:4.4.2":
+  version: 4.4.2
+  resolution: "@react-native-community/slider@npm:4.4.2"
+  checksum: 1ae613f594a8ea9d7243b3125d26b36aab4e4c2dd9eba1bf66c4f31878e74fae055cd35a1babc46b262240885bb61fa321610417bb2a6d9f77a330136ff33293
   languageName: node
   linkType: hard
 
@@ -7104,7 +7104,7 @@ __metadata:
     "@expo/webpack-config": ^19.0.0
     "@firebase/database": ^1.0.1
     "@react-native-async-storage/async-storage": 1.18.2
-    "@react-native-community/slider": ^4.4.3
+    "@react-native-community/slider": 4.4.2
     "@react-native-picker/picker": 2.4.10
     "@react-navigation/native": ^6.1.7
     "@react-navigation/stack": ^6.3.17
@@ -7118,6 +7118,7 @@ __metadata:
     expo-status-bar: ~1.6.0
     expo-web-browser: ~12.3.2
     firebase: ^10.3.1
+    jsonic: ^1.0.1
     react: 18.2.0
     react-dom: 18.2.0
     react-hook-form: ^7.46.1
@@ -8426,6 +8427,13 @@ __metadata:
     graceful-fs:
       optional: true
   checksum: 7af3b8e1ac8fe7f1eccc6263c6ca14e1966fcbc74b618d3c78a0a2075579487547b94f72b7a1114e844a1e15bb00d440e5d1720bfc4612d790a6f285d5ea8354
+  languageName: node
+  linkType: hard
+
+"jsonic@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "jsonic@npm:1.0.1"
+  checksum: c326932168c05d2e6cf859ea394596a2425e616e7baa3181ca887967b406da156069208772a067487dcc782810e9125ed45fe0bf52dd62434d4d9f0fa1138938
   languageName: node
   linkType: hard
 

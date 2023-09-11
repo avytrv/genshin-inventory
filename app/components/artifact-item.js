@@ -8,13 +8,13 @@ function ArtifactItem({ data }) {
     <Card style={styles.card}>
       <Text variant='titleLarge'>{ labels[data.set] } | { labels[data.type] }</Text>
       <Text variant='titleMedium'>{ labels[data.mainStatName] } : { data.mainStatValue }</Text>
-      {subStats.map((subStat) => {
+      {subStats.map((subStat, index) => {
         if (parseFloat(data[subStat.value]) !== 0) {
           return (
-            <Text>{ subStat.label } : {data[subStat.value]}</Text>
-            )
-          }
-        })}
+            <Text key={index}>{ subStat.label } : {data[subStat.value]}</Text>
+          )
+        }
+      })}
       </Card>
   );
 }

@@ -3,8 +3,13 @@ import { StyleSheet, View, TextInput, Button, Alert, Text } from 'react-native';
 import { auth, signInWithEmailAndPassword, ref, database, get } from '../firebase.js';
 import { FAB } from 'react-native-paper';
 import { Link } from 'expo-router';
-// import testArtifact from '../data/test-artifact.json';
 import ArtifactItem from './components/artifact-item.js';
+import { auth, signInWithEmailAndPassword } from '../firebase.js';
+import { FAB } from 'react-native-paper';
+import { Link } from 'expo-router';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+import ArtifactItem from '../components/artifact-item.js';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');

@@ -7,6 +7,7 @@ import sandsMainStats from '../../data/sands-main-stats.json';
 import gobletMainStats from '../../data/goblet-main-stats.json';
 import circletMainStats from '../../data/circlet-main-stats.json';
 import subStats from '../../data/substats.json';
+import images from '../images';
 
 import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
@@ -15,10 +16,13 @@ import { Picker } from '@react-native-picker/picker';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Slider from '@react-native-community/slider';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
 // import firebase from 'firebase/app';
 // import 'firebase/firebase-database'
 import { update, database, set, push, dataRef, ref, auth } from '../../firebase.js';
+import { Image } from 'expo-image';
 
 export default function Page() {
   const [ mainStats, setMainStats ] = useState([]);
@@ -149,7 +153,7 @@ export default function Page() {
                   <Picker.Item
                     label={set.label}
                     value={set.value} 
-                    key={set.value}
+                    key={uuidv4()}
                   />
                 ))}
               </Picker>
@@ -238,7 +242,7 @@ export default function Page() {
                   <Picker.Item
                     label={mainStat.label}
                     value={mainStat.value} 
-                    key={mainStat.value}
+                    key={uuidv4()}
                   />
                 ))}
               </Picker>
@@ -269,8 +273,18 @@ export default function Page() {
           <Text variant='titleMedium'>Sub stats</Text>
 
           {(subStats).map((subStat) => (
-            <View key={subStat.value}>
-              <Text variant='labelLarge' style={styles.label}>{subStat.label}</Text>
+            <View key={uuidv4()}>
+              <View style={styles.label}>
+                <Image
+                    source={images[subStat.value]}
+                    style={{ width: 20, height: 20 }}
+                    contentFit='cover'
+                />
+                <Text variant='labelLarge'>
+                  {subStat.label}
+                </Text>
+              </View>
+              
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -314,6 +328,11 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 8,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 4,
   },
   input: {
     borderWidth: 1,

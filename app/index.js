@@ -80,13 +80,12 @@ const Login = ({ navigation }) => {
   } else {
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text style={{fontWeight: 'bold'}}></Text>
+        <Text style={styles.title}>My Artifacts</Text>
         {currentUserArtifactData.current ? 
             currentUserArtifactData.current.map((artifact, index) => (
                 <ArtifactItem key={index} data={artifact} />
-            ))
-        : 
-            <Text>Loading...</Text>  // This is a placeholder; you can replace it with a loading spinner or other content
+            )): 
+            <Text>Loading...</Text> // will be displayed in case data hasn't been fetched yet
         }
         <Link href='/add' asChild>
             <FAB
@@ -127,6 +126,8 @@ const styles = StyleSheet.create({
     },
     title: {
       fontWeight: 'bold',
+      fontSize: 50,
+      alignSelf: 'center',
     },
     fab: {
       position: 'absolute',

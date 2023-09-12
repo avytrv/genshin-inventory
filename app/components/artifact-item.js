@@ -17,7 +17,7 @@ function ArtifactItem({ data }) {
           className='flex flex-row space-x-4 mb-2 items-center shadow'
         >
           <View className='flex space-y-1'>
-            <View className='flex flex-row space-x-2 items-center flex-wrap'>
+            <View className='flex flex-row space-x-2 items-center flex-wrap mb-1'>
               <Text variant='titleLarge'>{ labels[data.set] }</Text>
               <View className='flex flex-row space-x-2 items-center'>
                 <Image
@@ -27,6 +27,8 @@ function ArtifactItem({ data }) {
                 />
                 <Text variant='titleMedium'>{ labels[data.type] }</Text>
               </View>
+              <Text variant='titleMedium' className='px-2 py-1 rounded-md bg-slate-100'>{ data.rarity }★</Text>
+              <Text variant='titleMedium' className='px-2 py-1 rounded-md bg-slate-100'>Lvl { data.level }</Text>
             </View>
             <View
               className='flex flex-row space-x-1 items-center mb-1 font-bold'

@@ -82,6 +82,9 @@ const Login = ({ navigation }) => {
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Appbar.Header>
             <Appbar.Content title="My Artifacts" />
+            <Link href='/add' asChild>
+              <Appbar.Action icon="plus" />
+            </Link>
           </Appbar.Header>
             {currentUserArtifactData.current ? 
                 currentUserArtifactData.current.map((artifact, index) => (
@@ -90,12 +93,6 @@ const Login = ({ navigation }) => {
                 <Text>Loading</Text> // will be displayed in case data hasn't been fetched yet
             }
         </View>
-        <Link href='/add' asChild>
-          <FAB
-            icon='plus'
-            style={styles.fab}
-          />
-        </Link>
      </KeyboardAwareScrollView>
     );
   }

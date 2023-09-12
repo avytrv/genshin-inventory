@@ -33,22 +33,22 @@ export default function Page() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      set: '',
+      set: 'adventurer',
       rarity: 5,
       type: 'flower',
       level: 20,
       mainStatName: 'hp',
-      mainStatValue: '0',
-      hp: '0',
-      hpPercentage: '0',
-      atk: '0',
-      atkPercentage: '0',
-      def: '0',
-      defPercentage: '0',
-      elementalMastery: '0',
-      energyRecharge: '0',
-      critRate: '0',
-      critDmg: '0',
+      mainStatValue: '',
+      hp: '',
+      hpPercentage: '',
+      atk: '',
+      atkPercentage: '',
+      def: '',
+      defPercentage: '',
+      elementalMastery: '',
+      energyRecharge: '',
+      critRate: '',
+      critDmg: '',
     },
   });
 
@@ -97,32 +97,32 @@ export default function Page() {
       case 'flower':
         setMainStats(flowerMainStats);
         setValue('mainStatName', 'hp', options);
-        setValue('mainStatValue', '0', options);
+        setValue('mainStatValue', '', options);
         break;
       case 'plume':
         setMainStats(plumeMainStats);
         setValue('mainStatName', 'atk', options);
-        setValue('mainStatValue', '0', options);
+        setValue('mainStatValue', '', options);
         break;
       case 'sands':
         setMainStats(sandsMainStats);
         setValue('mainStatName', 'hp-percentage', options);
-        setValue('mainStatValue', '0', options);
+        setValue('mainStatValue', '', options);
         break;
       case 'goblet':
         setMainStats(gobletMainStats);
         setValue('mainStatName', 'hp-percentage', options);
-        setValue('mainStatValue', '0', options);
+        setValue('mainStatValue', '', options);
         break;
       case 'circlet':
         setMainStats(circletMainStats);
         setValue('mainStatName', 'hp-percentage', options);
-        setValue('mainStatValue', '0', options);
+        setValue('mainStatValue', '', options);
         break;
       default:
         setMainStats([]);
         setValue('mainStatName', '', options);
-        setValue('mainStatValue', '0', options);
+        setValue('mainStatValue', '', options);
     }
   }, [watchType]);
 
@@ -151,19 +151,21 @@ export default function Page() {
                 required: true,
               }}
               render={({ field: { onChange, value } }) => (
-                <Picker
-                  onValueChange={onChange}
-                  selectedValue={value}
-                  style={styles.picker}
-                >
-                  {sets.map((set) => (
-                    <Picker.Item
-                      label={set.label}
-                      value={set.value} 
-                      key={uuidv4()}
-                    />
-                  ))}
-                </Picker>
+                <View className='border border-black rounded-md'>
+                  <Picker
+                    onValueChange={onChange}
+                    selectedValue={value}
+                    style={styles.picker}
+                  >
+                    {sets.map((set) => (
+                      <Picker.Item
+                        label={set.label}
+                        value={set.value} 
+                        key={uuidv4()}
+                      />
+                    ))}
+                  </Picker>
+                </View>
               )}
               name='set'
             />
@@ -239,19 +241,21 @@ export default function Page() {
                 required: true,
               }}
               render={({ field: { onChange, value } }) => (
-                <Picker
-                  onValueChange={onChange}
-                  selectedValue={value}
-                  style={styles.picker}
-                >
-                  {mainStats.map((mainStat) => (
-                    <Picker.Item
-                      label={mainStat.label}
-                      value={mainStat.value} 
-                      key={uuidv4()}
-                    />
-                  ))}
-                </Picker>
+                <View className='border border-black rounded-md'>
+                  <Picker
+                    onValueChange={onChange}
+                    selectedValue={value}
+                    style={styles.picker}
+                  >
+                    {mainStats.map((mainStat) => (
+                      <Picker.Item
+                        label={mainStat.label}
+                        value={mainStat.value} 
+                        key={uuidv4()}
+                      />
+                    ))}
+                  </Picker>
+                </View>
               )}
               name='mainStatName'
             />

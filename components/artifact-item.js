@@ -4,7 +4,7 @@ import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import labels from '../data/labels.json';
 import subStats from '../data/substats.json';
-import images from '../lib/images';
+import images from '../helpers/images';
 import { Image } from 'expo-image';
 
 function ArtifactItem({ data }) {

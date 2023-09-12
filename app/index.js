@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Button, Alert, Text } from 'react-native';
 import { auth, signInWithEmailAndPassword, ref, database, get } from '../firebase.js';
-import { FAB } from 'react-native-paper';
+import { Appbar, FAB } from 'react-native-paper';
 import { Link } from 'expo-router';
 // import testArtifact from '../data/test-artifact.json';
 import ArtifactItem from './components/artifact-item.js';
@@ -80,21 +80,23 @@ const Login = ({ navigation }) => {
     return (
       <KeyboardAwareScrollView>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text style={styles.title}>My Artifacts</Text>
-          {currentUserArtifactData.current ? 
-              currentUserArtifactData.current.map((artifact, index) => (
-                  <ArtifactItem key={index} data={artifact} />
-              )): 
-              <Text>Loading</Text> // will be displayed in case data hasn't been fetched yet
-          }
-          <Link href='/add' asChild>
-              <FAB
-                  icon='plus'
-                  style={styles.fab}
-              />
-          </Link>
-      </View>
-    </KeyboardAwareScrollView>
+          <Appbar.Header>
+            <Appbar.Content title="My Artifacts" />
+          </Appbar.Header>
+            {currentUserArtifactData.current ? 
+                currentUserArtifactData.current.map((artifact, index) => (
+                    <ArtifactItem key={index} data={artifact} />
+                )): 
+                <Text>Loading</Text> // will be displayed in case data hasn't been fetched yet
+            }
+        </View>
+        <Link href='/add' asChild>
+          <FAB
+            icon='plus'
+            style={styles.fab}
+          />
+        </Link>
+     </KeyboardAwareScrollView>
     );
   }
 }

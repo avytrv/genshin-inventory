@@ -7,7 +7,7 @@ import sandsMainStats from '../../data/sands-main-stats.json';
 import gobletMainStats from '../../data/goblet-main-stats.json';
 import circletMainStats from '../../data/circlet-main-stats.json';
 import subStats from '../../data/substats.json';
-import images from '../images';
+import images from '../../lib/images';
 
 import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
@@ -144,19 +144,21 @@ export default function Page() {
               required: true,
             }}
             render={({ field: { onChange, value } }) => (
-              <Picker
-                onValueChange={onChange}
-                selectedValue={value}
-                style={styles.picker}
-              >
-                {sets.map((set) => (
-                  <Picker.Item
-                    label={set.label}
-                    value={set.value} 
-                    key={uuidv4()}
-                  />
-                ))}
-              </Picker>
+              <View style={styles.picker}>
+                <Picker
+                  onValueChange={onChange}
+                  selectedValue={value}
+                  style={styles.picker}
+                >
+                  {sets.map((set) => (
+                    <Picker.Item
+                      label={set.label}
+                      value={set.value} 
+                      key={uuidv4()}
+                    />
+                  ))}
+                </Picker>
+              </View>
             )}
             name='set'
           />
@@ -233,19 +235,21 @@ export default function Page() {
               required: true,
             }}
             render={({ field: { onChange, value } }) => (
-              <Picker
-                onValueChange={onChange}
-                selectedValue={value}
-                style={styles.picker}
-              >
-                {mainStats.map((mainStat) => (
-                  <Picker.Item
-                    label={mainStat.label}
-                    value={mainStat.value} 
-                    key={uuidv4()}
-                  />
-                ))}
-              </Picker>
+              <View style={styles.picker}>
+                <Picker
+                  onValueChange={onChange}
+                  selectedValue={value}
+                  style={styles.picker}
+                >
+                  {mainStats.map((mainStat) => (
+                    <Picker.Item
+                      label={mainStat.label}
+                      value={mainStat.value} 
+                      key={uuidv4()}
+                    />
+                  ))}
+                </Picker>
+              </View>
             )}
             name='mainStatName'
           />
@@ -324,7 +328,8 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   picker: {
-    backgroundColor: 'rgb(237, 221, 246)',
+    borderWidth: 1,
+    borderRadius: 8,
   },
   label: {
     marginBottom: 8,
@@ -337,8 +342,9 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    fontSize: 16,
   },
   fab: {
     position: 'absolute',

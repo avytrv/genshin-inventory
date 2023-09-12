@@ -12,7 +12,6 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  // const [artifacts, setArtifacts] = useState([testArtifact]); 
 
   const currentUserUIDRef = useRef(null);
   const currentSnapshot = useRef(null);
@@ -32,7 +31,11 @@ const Login = ({ navigation }) => {
           currentSnapshot.current = snapshot;
   
           const deepCopy = JSON.parse(JSON.stringify(currentSnapshot.current));
-          artifactsIds.current = Object.keys(deepCopy?.users?.[currentUserUIDRef.current]?.["ownedItems"]);
+          if (deepCopy?.users?.[currentUserUIDRef.current]?.["ownedItems"]) {
+            artifactsIds.current = Object.keys(deepCopy.users[currentUserUIDRef.current]["ownedItems"]);
+        } else {
+            artifactsIds.current = [];
+        }
   
           currentUserArtifactData.current = [];
           for (var i = 0; i < artifactsIds.current.length; i++) {
@@ -60,13 +63,7 @@ const Login = ({ navigation }) => {
   }; 
 
   if (loggedIn) {
-    if (loadingArtifacts) {
-      return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Loading...</Text>
-        </View>
-      );
-    } else if (currentUserArtifactData.current == null || currentUserArtifactData.current.length == 0) {
+    if (currentUserArtifactData.current == null || currentUserArtifactData.current.length == 0) {
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text style={{fontWeight: 'bold'}}></Text>
@@ -88,7 +85,7 @@ const Login = ({ navigation }) => {
               currentUserArtifactData.current.map((artifact, index) => (
                   <ArtifactItem key={index} data={artifact} />
               )): 
-              <Text>Loading...</Text> // will be displayed in case data hasn't been fetched yet
+              <Text>Loading</Text> // will be displayed in case data hasn't been fetched yet
           }
           <Link href='/add' asChild>
               <FAB
